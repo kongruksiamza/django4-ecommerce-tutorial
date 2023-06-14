@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% load humanize %}
+
+{% block title%} รายละเอียดสินค้า | {{product.name}} {% endblock%}
+
+{% block content %}
+<!-- เนื้อหา (Content) -->
+<div class="container my-5">
+        <div class="card-wrapper">
+            <div class="row align-items-center mt-4 my-4">
+                <div class="col-12 col-lg-6">
+                    <div class="image-wrapper">
+                        <img src="{{product.image.url}}">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 my-4">
+                    <div class="text-box">
+                        <h5 class="mbr-title mbr-fonts-style display-5">
+                            <strong>{{product.name}}</strong>
+                            <p class="display-7 text-secondary">เหลือสินค้าอยู่ {{product.stock}} ชิ้น</p>
+                        </h5>
+                        <p class="mbr-text mbr-fonts-style display-7">
+                                {{product.description}}
+                        </p>
+                        <div class="cost">
+                            <span class="currentcost mbr-fonts-style pr-2 display-5">ราคา {{product.price | intcomma}} บาท</span>
+                        </div>
+                        <div class="mbr-section-btn pt-3">
+                            {% if product.stock <= 0 %}
+                                <h2 class="mx-2 text-secondary"><strong>สินค้าหมด</strong></h2>
+                            {% else %}
+                                <a href="{%url 'addCart' product.id %}" class="btn btn-primary display-4">
+                                    <i class="bi bi-cart3"></i></i>&nbsp;
+                                    หยิบสินค้าลงตะกร้า
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+</div>
+{% endblock %}

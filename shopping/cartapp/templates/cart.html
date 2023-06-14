@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block title %} ตะกร้าสินค้าของฉัน {% endblock %}
+{% load humanize %}
+{% block content %}
+
+{% if not cartItem %}
+<!-- เนื้อหา (Content) -->
+<section class="container my-5">
+    <br><br><br><br>
+    <div class="text-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="img-fluid" style="width: 200px; height: 200px; margin-left: auto; margin-right: auto" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+        </svg>
+        <br>
+        <h1 class="my-4"><strong>ไม่มีสินค้าในตะกร้า</strong></h1>
+        <div class="mbr-section-btn pt-3">
+            <a href="/" class="btn btn-primary display-4">
+                <i class="bi bi-house-door"></i>&nbsp;
+                กลับหน้าแรก
+            </a>
+        </div>
+        <br><br>
+    </div>
+</section>
+{% else %}
+<!-- เนื้อหา (Content) -->
+<section class="h-100 h-custom my-5">
+    <div class="container py-5 h-100 my-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12">
+                <div class="card card-registration card-registration-2" style="border-radius: 15px; background-color:#fafafa">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-lg-7">
+                                <div class="p-5">
+                                    <!-- สินค้าในตะกร้า -->
+                                    <div class="d-flex justify-content-between align-items-center mb-5">
+                                        <h4 class="fw-bold mb-0 text-black">รายการสั่งซื้อ</h4>
+                                        <h6 class="mb-0 text-muted">{{counter}} รายการ</h6>
+                                    </div>
+                                    <hr class="my-4">
+                                    {% for item in cartItem %}
+                                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                                        <div class="col-md-2 col-lg-2 col-xl-2">
+                                            <img src="{{item.product.image.url}}" class="img-fluid rounded-3">
+                                        </div>
+                                        <div class="col-md-3 col-lg-3 col-xl-3">
+                                            <h6 class="text-black mb-0">{{item.quantity}} x {{item.product.name}}</h6>
+                                        </div>
+                                        <div class="col-md-3 col-lg-2 col-xl-3 offset-lg-1">
+                                            <h6 class="mb-0">{{item.sub_total | intcomma}}</h6>
+                                        </div>
+                                        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                                            <a href="{% url 'removeCart' item.product.id %}"
+                                               onclick="return confirm('คุณต้องการลบสินค้าออกจากตะกร้าหรือไม่ ?')"
+                                            ><h5><i class="bi bi-trash3"></i></h5></a>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                    <hr class="my-4">
+                                </div>
+                            </div>
+                            <div class="col-lg-5 bg-grey">
+                                <div class="p-5">
+                                    <h4 class="fw-bold mb-5 mt-0 pt-0">สรุปคำสั่งซื้อ</h4>
+                                    <hr class="my-4">
+                                    <div class="d-flex justify-content-between mb-5">
+                                        <h5 class="text-uppercase">ยอดชำระเงินรวม</h5>
+                                        <h5>{{total | intcomma}} บาท</h5>
+                                    </div>
+                                    <a href="/order">
+                                        <button type="button" class="btn btn-primary w-100 text-center" data-mdb-ripple-color="dark">
+                                            ดำเนินการ
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+</section>
+{% endif %}
+{% endblock %}

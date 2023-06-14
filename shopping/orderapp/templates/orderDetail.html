@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% load humanize %}
+
+{% block title %} รายละเอียดสินค้าในใบสั่งซื้อ {% endblock %}
+
+{% block content %}
+<!-- เนื้อหา (Content) -->
+<section class="content2 cid-tsEQSCqggh" id="content2-2">
+        <div class="container my-5">
+            <div class="mbr-section-head">
+                <h4 class="mbr-section-title mbr-fonts-style align-start mb-0 display-2">
+                    <strong>รหัสใบสั่งซื้อ #{{order.id}}</strong>
+                </h4>
+            </div>
+            <div class="row my-5">
+                <table class="table text-center table-bordered my-5">
+                    <thead>
+                      <tr>
+                        <th scope="col">ชื่อสินค้า</th>
+                        <th scope="col">ราคา</th>
+                        <th scope="col">จำนวน</th>
+                        <th scope="col">รวม</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order_items %}
+                        <tr>
+                            <td>{{item.product}}</td>
+                            <td>{{item.price | intcomma}}</td>
+                            <td>{{item.quantity}} ชิ้น</td>
+                            <td>{{item.sub_total | intcomma}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td><strong>ยอดชำระเงินรวม</strong></td>
+                            <td><strong>{{order.total | intcomma}}</strong></td>
+                        </tr>
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+        <br><br><br><br><br><br>
+</section>
+{% endblock %}
